@@ -1,8 +1,10 @@
 import numpy
-import tsflearn
+import tflearn
 import tensorflow
 import random
 import json
+import pickle
+import nltk
 
 with open("intents.json") as file:
     data = json.load(file)
@@ -99,6 +101,7 @@ def chat():
             break
         
         results = model.predict([bag_of_words(inp, words)])
-        print(results)
+        results_index = numpy.argmax(results_index)
+        tag = labels[results_index]
 
 chat()
