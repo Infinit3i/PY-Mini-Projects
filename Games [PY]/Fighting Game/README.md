@@ -8,7 +8,7 @@ install git on your os
 
 cd [locationdesired]
 
-git clone https://github.com/Tech-Guardian-Security/fighting-Game/
+git clone <this git>
 
 cd into fighting-Game
 
