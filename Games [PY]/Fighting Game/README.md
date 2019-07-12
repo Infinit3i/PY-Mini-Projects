@@ -17,3 +17,7 @@ chmod +x fightGame.py
 ./fightgame.py
 
 ENJOY!
+
+#### Learnt
+- Created my first game from scratch
+- Understood how to use functions
