@@ -10,12 +10,14 @@ playerspeed = 40
 bulletspeed = 30
 enemyspeed = 5
 
-#Set up the screen
 wn = turtle.Screen()
 wn.bgcolor("black")
 wn.title("Space Invaders")
+wn.bgpic("./Games [PY]/Space Invaders/space_invaders_background.gif")
 
-#Draw border
+turtle.register_shape("./Games [PY]/Space Invaders/invader.gif")
+turtle.register_shape("./Games [PY]/Space Invaders/player.gif")
+
 border_pen = turtle.Turtle()
 border_pen.speed(0)
 border_pen.color("white")
@@ -26,12 +28,21 @@ border_pen.pensize(3)
 for side in range(4):
 	border_pen.fd(600)
 	border_pen.lt(90)
-border_pen.hideturtle()	
+border_pen.hideturtle()
 
-#Create the player turtle
+score = 0
+score_pen = turtle.Turtle()
+score_pen.speed(0)
+score_pen.color("white")
+score_pen.penup()
+score_pen.setposition(-285, 270)
+scorestring = "Score: %s" %score
+score_pen.write(scorestring, False, align="left", font="Arial")
+score_pen.hideturtle()
+
 player = turtle.Turtle()
 player.color("blue")
-player.shape("triangle")
+player.shape("./Games [PY]/Space Invaders/player.gif")
 player.penup()
 player.speed(0)
 player.setposition(0, -250)
@@ -45,7 +56,7 @@ for i in range(number_of_enemies):
 
 for enemy in enemies:
 	enemy.color("red")
-	enemy.shape("circle")
+	enemy.shape("./Games [PY]/Space Invaders/invader.gif")
 	enemy.penup()
 	enemy.speed(0)
 	x = random.randint(-200, 200)
@@ -60,7 +71,6 @@ bullet.speed(0)
 bullet.setheading(90)
 bullet.shapesize(0.5, 0.5)
 bullet.hideturtle()
-
 
 bulletstate = "ready"
 
@@ -107,16 +117,18 @@ while True:
 		enemy.setx(x)
 
 		if enemy.xcor() > 280:
-			y = enemy.ycor()
-			y -= 40
+			for e in enemies:
+				y = e.ycor()
+				y -= 40
+				e.sety(y)
 			enemyspeed *= -1
-			enemy.sety(y)
 
 		if enemy.xcor() < -280:
-			y = enemy.ycor()
-			y -= 40
+			for e in enemies:
+				y = e.ycor()
+				y -= 40
+				e.sety(y)
 			enemyspeed *= -1
-			enemy.sety(y)
 			
 		if isCollision(bullet, enemy):
 			bullet.hideturtle()
@@ -125,12 +137,16 @@ while True:
 			x = random.randint(-200, 200)
 			y = random.randint(100, 250)
 			enemy.setposition(x, y)
+			score += 10
+			scorestring = "Score: %s" %score
+			score_pen.clear()
+			score_pen.write(scorestring, False, align="left", font="Arial")
 		
 		if isCollision(player, enemy):
 			player.hideturtle()
 			enemy.hideturtle()
 			print ("Game Over")
-			break
+			exit()
 
 	if bulletstate == "fire":
 		y = bullet.ycor()
@@ -140,7 +156,3 @@ while True:
 	if bullet.ycor() > 275:
 		bullet.hideturtle()
 		bulletstate = "ready"
-
-
-delay = raw_input("Press enter to finsh.")
-
