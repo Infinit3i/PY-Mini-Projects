@@ -6,10 +6,16 @@ import os
 import math
 import random
 
+playerspeed = 40
+bulletspeed = 30
+enemyspeed = 5
+
+#Set up the screen
 wn = turtle.Screen()
 wn.bgcolor("black")
 wn.title("Space Invaders")
 
+#Draw border
 border_pen = turtle.Turtle()
 border_pen.speed(0)
 border_pen.color("white")
@@ -22,6 +28,7 @@ for side in range(4):
 	border_pen.lt(90)
 border_pen.hideturtle()	
 
+#Create the player turtle
 player = turtle.Turtle()
 player.color("blue")
 player.shape("triangle")
@@ -30,9 +37,7 @@ player.speed(0)
 player.setposition(0, -250)
 player.setheading(90)
 
-playerspeed = 15
-
-number_of_enemies = 5
+number_of_enemies = 7
 enemies = []
 
 for i in range(number_of_enemies):
@@ -47,9 +52,6 @@ for enemy in enemies:
 	y = random.randint(100, 250)
 	enemy.setposition(x, y)
 
-enemyspeed = 2
-
-
 bullet = turtle.Turtle()
 bullet.color("yellow")
 bullet.shape("triangle")
@@ -58,8 +60,6 @@ bullet.speed(0)
 bullet.setheading(90)
 bullet.shapesize(0.5, 0.5)
 bullet.hideturtle()
-
-bulletspeed = 20
 
 
 bulletstate = "ready"
@@ -93,6 +93,7 @@ def isCollision(t1, t2):
 		return True
 	else:
 		return False
+
 turtle.listen()
 turtle.onkeypress(move_left, "Left")
 turtle.onkeypress(move_right, "Right")
@@ -136,7 +137,10 @@ while True:
 		y += bulletspeed
 		bullet.sety(y)
 	
-    if bullet.ycor() > 275:
+	if bullet.ycor() > 275:
 		bullet.hideturtle()
 		bulletstate = "ready"
+
+
+delay = raw_input("Press enter to finsh.")
 
